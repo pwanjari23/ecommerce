@@ -6,9 +6,9 @@ const Movies = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch movies handler using clean async / await
+  // Fetch movies handler using clean async / await with loading state
   const fetchMoviesHandler = useCallback(async () => {
-    setIsLoading(true);
+    setIsLoading(true); // Enable loading state before starting the network request
     setError(null);
 
     try {
