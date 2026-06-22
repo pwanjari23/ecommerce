@@ -1,42 +1,86 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Container, Row, Col, Card, Spinner, Alert } from 'react-bootstrap';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isRetrying, setIsRetrying] = useState(false);
 
-  // Fetch movies handler using clean async / await with loading state
-  const fetchMoviesHandler = useCallback(async () => {
-    setIsLoading(true); // Enable loading state before starting the network request
-    setError(null);
+  const retryTimerRef = useRef(null);
 
-    try {
-      const response = await fetch('https://swapi.info/api/films');
-      
-      // Verify response success status
-      if (!response.ok) {
-        throw new Error('Something went wrong while fetching movies!');
+  // Clean up timers on component unmount
+  useEffect(() => {
+    return () => {
+      if (retryTimerRef.current) {
+        clearTimeout(retryTimerRef.current);
       }
+    };
+  }, []);
 
-      const data = await response.json();
-
-      // Map dynamic fields from SWAPI structure
-      const transformedMovies = data.map((movieData) => {
-        return {
-          id: movieData.episode_id,
-          title: movieData.title,
-          openingCrawl: movieData.opening_crawl,
-          releaseDate: movieData.release_date,
-        };
-      });
-
-      setMovies(transformedMovies);
-    } catch (err) {
-      setError(err.message || 'Failed to fetch movies.');
-    } finally {
-      setIsLoading(false);
+  // Cancel retrying handler
+  const cancelRetryHandler = useCallback(() => {
+    setIsRetrying(false);
+    if (retryTimerRef.current) {
+      clearTimeout(retryTimerRef.current);
+      retryTimerRef.current = null;
     }
+    setError('Retrying cancelled by user.');
+  }, []);
+
+  // Fetch movies handler using clean async / await with retry logic
+  const fetchMoviesHandler = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    setIsRetrying(false);
+
+    if (retryTimerRef.current) {
+      clearTimeout(retryTimerRef.current);
+      retryTimerRef.current = null;
+    }
+
+    const performFetch = async () => {
+      try {
+        const response = await fetch('https://swapi.info/api/films');
+        
+        // Verify response success status
+        if (!response.ok) {
+          throw new Error('Something went wrong ....Retrying');
+        }
+
+        const data = await response.json();
+
+        // Map dynamic fields from SWAPI structure
+        const transformedMovies = data.map((movieData) => {
+          return {
+            id: movieData.episode_id,
+            title: movieData.title,
+            openingCrawl: movieData.opening_crawl,
+            releaseDate: movieData.release_date,
+          };
+        });
+
+        setMovies(transformedMovies);
+        setError(null);
+        setIsRetrying(false);
+        setIsLoading(false);
+      } catch (err) {
+        const errorMessage = err.message === 'Something went wrong ....Retrying'
+          ? err.message
+          : 'Something went wrong ....Retrying';
+        setError(errorMessage);
+        setIsLoading(false);
+        setIsRetrying(true);
+
+        // Schedule retry automatically after 5 seconds
+        retryTimerRef.current = setTimeout(() => {
+          setIsLoading(true);
+          performFetch();
+        }, 5000);
+      }
+    };
+
+    await performFetch();
   }, []);
 
   return (
@@ -49,7 +93,7 @@ const Movies = () => {
         </div>
 
         {/* Fetch Action Panel */}
-        <div className="text-center mb-5">
+        <div className="text-center mb-5 d-flex justify-content-center align-items-center gap-3 flex-wrap">
           <button 
             className="promo-album-btn py-3 px-5" 
             onClick={fetchMoviesHandler}
@@ -58,6 +102,16 @@ const Movies = () => {
           >
             {isLoading ? 'FETCHING...' : 'FETCH MOVIES'}
           </button>
+
+          {isRetrying && (
+            <button 
+              className="btn-cancel-retry py-3 px-4" 
+              onClick={cancelRetryHandler}
+              type="button"
+            >
+              CANCEL RETRY
+            </button>
+          )}
         </div>
 
         {/* Dynamic Content Rendering */}

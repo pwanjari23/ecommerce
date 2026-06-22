@@ -758,3 +758,21 @@ h1, h2, h3, h4, h5, h6 {
 .text-accent-gold {
   color: var(--accent-gold) !important;
 }
+
+/* Cancel Retry Button Style */
+.btn-cancel-retry {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: var(--transition-smooth);
+}
+
+.btn-cancel-retry:hover {
+  background: var(--accent);
+  color: var(--text-light);
+  box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+  transform: translateY(-2px);
+}
