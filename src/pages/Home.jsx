@@ -14,19 +14,6 @@ const tourDates = [
 const Home = () => {
   return (
     <main className="main-content">
-      {/* Home Hero Promo */}
-      <section className="home-promo-section py-4 text-center">
-        <Container>
-          <button className="promo-album-btn mb-3" type="button">
-            Get our Latest Album
-          </button>
-          <br />
-          <button className="promo-play-btn" type="button" aria-label="Play Album">
-            <FaPlay />
-          </button>
-        </Container>
-      </section>
-
       {/* Tour Dates Section */}
       <section className="py-5">
         <Container>
