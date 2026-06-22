@@ -9,14 +9,16 @@ const Movies = () => {
 
   const retryTimerRef = useRef(null);
 
-  // Clean up timers on component unmount
+  // Automatically fetch movies when the component mounts, and clean up timers on unmount
   useEffect(() => {
+    fetchMoviesHandler();
+
     return () => {
       if (retryTimerRef.current) {
         clearTimeout(retryTimerRef.current);
       }
     };
-  }, []);
+  }, [fetchMoviesHandler]);
 
   // Cancel retrying handler
   const cancelRetryHandler = useCallback(() => {
