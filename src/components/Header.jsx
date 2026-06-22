@@ -2,7 +2,7 @@ import React from 'react';
 import { Navbar, Nav, Container, Badge } from 'react-bootstrap';
 import { FiShoppingCart } from 'react-icons/fi';
 
-const Header = () => {
+const Header = ({ cartCount, onCartClick }) => {
   return (
     <Navbar collapseOnSelect expand="md" variant="dark" className="premium-navbar" sticky="top">
       <Container>
@@ -17,10 +17,10 @@ const Header = () => {
             <Nav.Link href="#" className="nav-link-custom">ABOUT</Nav.Link>
           </Nav>
           <Nav>
-            <button className="cart-btn-premium">
+            <button className="cart-btn-premium" onClick={onCartClick} type="button">
               <FiShoppingCart size={18} />
               <span>Cart</span>
-              <Badge className="cart-badge">0</Badge>
+              <Badge className="cart-badge">{cartCount}</Badge>
             </button>
           </Nav>
         </Navbar.Collapse>

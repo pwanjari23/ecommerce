@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductCard from './components/ProductCard';
 import Footer from './components/Footer';
+import Cart from './components/Cart';
 
 const productsArr = [
   {
@@ -28,10 +29,44 @@ const productsArr = [
   }
 ];
 
+const cartElements = [
+  {
+    title: 'Colors',
+    price: 100,
+    imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
+    quantity: 2,
+  },
+  {
+    title: 'Black and white Colors',
+    price: 50,
+    imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
+    quantity: 3,
+  },
+  {
+    title: 'Yellow and Black Colors',
+    price: 70,
+    imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
+    quantity: 1,
+  }
+];
+
 function App() {
+  const [cartItems, setCartItems] = useState(cartElements);
+  const [showCart, setShowCart] = useState(false);
+
+  // Handlers for cart interaction
+  const handleToggleCart = () => setShowCart(prev => !prev);
+  const handleRemoveItem = (title) => {
+    setCartItems(prev => prev.filter(item => item.title !== title));
+  };
+  const handleClearCart = () => setCartItems([]);
+
+  // Dynamically calculate total quantities for the navbar badge
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
     <>
-      <Header />
+      <Header cartCount={cartCount} onCartClick={handleToggleCart} />
 
       <Hero />
 
@@ -61,6 +96,15 @@ function App() {
           </Row>
         </Container>
       </main>
+
+      {/* Cart Offcanvas Drawer */}
+      <Cart 
+        show={showCart} 
+        handleClose={handleToggleCart} 
+        cartItems={cartItems} 
+        onRemove={handleRemoveItem}
+        onClear={handleClearCart}
+      />
 
       <Footer />
     </>
