@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Store from './pages/Store';
 import About from './pages/About';
+import Movies from './pages/Movies';
 
 function App() {
   const [showCart, setShowCart] = useState(false);
@@ -28,6 +29,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/store" element={<Store />} />
         <Route path="/about" element={<About />} />
+        <Route path="/movies" element={<Movies />} />
       </Routes>
 
       {/* Cart Offcanvas Drawer */}

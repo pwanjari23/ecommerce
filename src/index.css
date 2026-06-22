@@ -747,3 +747,14 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-muted);
   margin-bottom: 22px;
 }
+
+/* Movies Page Specific Styling */
+.custom-spinner {
+  color: var(--primary) !important;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.text-accent-gold {
+  color: var(--accent-gold) !important;
+}

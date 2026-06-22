@@ -1,0 +1,117 @@
+import React, { useState, useCallback } from 'react';
+import { Container, Row, Col, Card, Spinner, Alert } from 'react-bootstrap';
+
+const Movies = () => {
+  const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Fetch movies handler using clean async / await
+  const fetchMoviesHandler = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('https://swapi.info/api/films');
+      
+      // Verify response success status
+      if (!response.ok) {
+        throw new Error('Something went wrong while fetching movies!');
+      }
+
+      const data = await response.json();
+
+      // Map dynamic fields from SWAPI structure
+      const transformedMovies = data.map((movieData) => {
+        return {
+          id: movieData.episode_id,
+          title: movieData.title,
+          openingCrawl: movieData.opening_crawl,
+          releaseDate: movieData.release_date,
+        };
+      });
+
+      setMovies(transformedMovies);
+    } catch (err) {
+      setError(err.message || 'Failed to fetch movies.');
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  return (
+    <main className="main-content py-5">
+      <Container>
+        {/* Section Header */}
+        <div className="section-title-container mb-5">
+          <h2 className="section-title">STAR WARS MOVIES</h2>
+          <div className="section-title-line"></div>
+        </div>
+
+        {/* Fetch Action Panel */}
+        <div className="text-center mb-5">
+          <button 
+            className="promo-album-btn py-3 px-5" 
+            onClick={fetchMoviesHandler}
+            disabled={isLoading}
+            type="button"
+          >
+            {isLoading ? 'FETCHING...' : 'FETCH MOVIES'}
+          </button>
+        </div>
+
+        {/* Dynamic Content Rendering */}
+        {isLoading && (
+          <div className="text-center my-5">
+            <Spinner animation="border" variant="purple" className="custom-spinner" />
+            <p className="mt-3 text-muted">Loading Star Wars films...</p>
+          </div>
+        )}
+
+        {error && (
+          <Alert variant="danger" className="mx-auto" style={{ maxWidth: '600px' }}>
+            <Alert.Heading>Connection Error</Alert.Heading>
+            <p>{error}</p>
+          </Alert>
+        )}
+
+        {!isLoading && !error && movies.length === 0 && (
+          <div className="text-center text-muted my-5">
+            <p>No movies fetched yet. Click "FETCH MOVIES" to retrieve them.</p>
+          </div>
+        )}
+
+        {!isLoading && !error && movies.length > 0 && (
+          <Row className="g-4">
+            {movies.map((movie) => (
+              <Col key={movie.id} xs={12} md={6}>
+                <Card className="premium-product-card h-100">
+                  <Card.Body className="d-flex flex-column justify-content-between p-4">
+                    <div>
+                      <div className="d-flex justify-content-between align-items-center mb-3">
+                        <Card.Title className="text-light mb-0 fs-4">
+                          {movie.title}
+                        </Card.Title>
+                        <span className="text-accent-gold fw-bold">
+                          Ep. {movie.id}
+                        </span>
+                      </div>
+                      <h6 className="text-muted mb-3">
+                        Released: {movie.releaseDate}
+                      </h6>
+                      <Card.Text className="text-muted" style={{ lineHeight: '1.6', fontSize: '0.95rem' }}>
+                        {movie.openingCrawl}
+                      </Card.Text>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        )}
+      </Container>
+    </main>
+  );
+};
+
+export default Movies;
