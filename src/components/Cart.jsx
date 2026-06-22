@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Offcanvas } from 'react-bootstrap';
+import CartContext from '../store/cart-context';
 
-const Cart = ({ show, handleClose, cartItems, onRemove, onClear }) => {
+const Cart = ({ show, handleClose }) => {
+  const cartCtx = useContext(CartContext);
+  const cartItems = cartCtx.items;
+
   // Calculate total price dynamically
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const handlePurchase = () => {
     alert('Thank you for your purchase!');
-    if (onClear) {
-      onClear();
-    }
+    cartCtx.clearCart();
     handleClose();
   };
 
@@ -60,7 +62,7 @@ const Cart = ({ show, handleClose, cartItems, onRemove, onClear }) => {
                   <span className="cart-quantity-badge">{item.quantity}</span>
                   <button 
                     className="cart-item-remove-btn"
-                    onClick={() => onRemove(item.title)}
+                    onClick={() => cartCtx.removeItem(item.title)}
                     type="button"
                   >
                     REMOVE

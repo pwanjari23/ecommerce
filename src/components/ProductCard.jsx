@@ -1,11 +1,21 @@
-import React from 'react';
-import { Card, Button } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { Card } from 'react-bootstrap';
+import CartContext from '../store/cart-context';
 
 const ProductCard = ({ title, price, imageUrl }) => {
+  const cartCtx = useContext(CartContext);
+
+  const addToCartHandler = () => {
+    cartCtx.addItem({
+      title: title,
+      price: price,
+      imageUrl: imageUrl,
+    });
+  };
+
   return (
     <div className="product-card-wrapper h-100 mb-4">
       <Card className="premium-product-card">
-       
         <Card.Body className="product-card-body">
           <Card.Title className="product-card-title text-center">
             {title}
@@ -20,7 +30,11 @@ const ProductCard = ({ title, price, imageUrl }) => {
             <div className="product-price">
               <span>$</span>{price}
             </div>
-            <button className="buy-btn-premium" type="button">
+            <button 
+              className="buy-btn-premium" 
+              type="button"
+              onClick={addToCartHandler}
+            >
               ADD TO CART
             </button>
           </div>

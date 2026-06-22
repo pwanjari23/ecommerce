@@ -29,44 +29,15 @@ const productsArr = [
   }
 ];
 
-const cartElements = [
-  {
-    title: 'Colors',
-    price: 100,
-    imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
-    quantity: 2,
-  },
-  {
-    title: 'Black and white Colors',
-    price: 50,
-    imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
-    quantity: 3,
-  },
-  {
-    title: 'Yellow and Black Colors',
-    price: 70,
-    imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
-    quantity: 1,
-  }
-];
-
 function App() {
-  const [cartItems, setCartItems] = useState(cartElements);
   const [showCart, setShowCart] = useState(false);
 
   // Handlers for cart interaction
   const handleToggleCart = () => setShowCart(prev => !prev);
-  const handleRemoveItem = (title) => {
-    setCartItems(prev => prev.filter(item => item.title !== title));
-  };
-  const handleClearCart = () => setCartItems([]);
-
-  // Dynamically calculate total quantities for the navbar badge
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <>
-      <Header cartCount={cartCount} onCartClick={handleToggleCart} />
+      <Header onCartClick={handleToggleCart} />
 
       <Hero />
 
@@ -101,9 +72,6 @@ function App() {
       <Cart 
         show={showCart} 
         handleClose={handleToggleCart} 
-        cartItems={cartItems} 
-        onRemove={handleRemoveItem}
-        onClear={handleClearCart}
       />
 
       <Footer />
