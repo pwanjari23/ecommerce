@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { FIREBASE_API_KEY } from '../pages/Auth';
 
 const AuthContext = React.createContext({
   token: '',
@@ -22,6 +23,37 @@ export const AuthContextProvider = (props) => {
     setToken(null);
     localStorage.removeItem('token');
   };
+
+  useEffect(() => {
+    if (token) {
+      const verifyToken = async () => {
+        try {
+          const response = await fetch(
+            `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${FIREBASE_API_KEY}`,
+            {
+              method: 'POST',
+              body: JSON.stringify({
+                idToken: token,
+              }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+
+          if (!response.ok) {
+            // Token is invalid or expired
+            logoutHandler();
+          }
+        } catch (err) {
+          // Keep the session if it's just a network/connection error,
+          // but logout if the server returned a 400 (which is caught by !response.ok).
+        }
+      };
+
+      verifyToken();
+    }
+  }, [token]);
 
   const contextValue = {
     token: token,
