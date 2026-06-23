@@ -70,6 +70,11 @@ const Auth = () => {
 
       setSuccess(true);
       
+      // Log the JWT token
+      if (data && data.idToken) {
+        console.log('idToken:', data.idToken);
+      }
+      
       // Clear input fields
       emailRef.current.value = '';
       passwordRef.current.value = '';
