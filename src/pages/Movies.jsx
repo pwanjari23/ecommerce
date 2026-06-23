@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Container, Row, Col, Card, Spinner, Alert } from 'react-bootstrap';
+import AddMovie from '../components/AddMovie';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -9,16 +10,18 @@ const Movies = () => {
 
   const retryTimerRef = useRef(null);
 
-  // Automatically fetch movies when the component mounts, and clean up timers on unmount
-  useEffect(() => {
-    fetchMoviesHandler();
-
-    return () => {
-      if (retryTimerRef.current) {
-        clearTimeout(retryTimerRef.current);
-      }
-    };
-  }, [fetchMoviesHandler]);
+  // Handler to add a movie locally to the list
+  const addMovieHandler = useCallback((newMovie) => {
+    setMovies((prevMovies) => {
+      const movieWithId = {
+        id: Date.now(),
+        title: newMovie.title,
+        openingCrawl: newMovie.openingText,
+        releaseDate: newMovie.releaseDate
+      };
+      return [movieWithId, ...prevMovies];
+    });
+  }, []);
 
   // Cancel retrying handler
   const cancelRetryHandler = useCallback(() => {
@@ -85,6 +88,17 @@ const Movies = () => {
     await performFetch();
   }, []);
 
+  // Automatically fetch movies when the component mounts, and clean up timers on unmount
+  useEffect(() => {
+    fetchMoviesHandler();
+
+    return () => {
+      if (retryTimerRef.current) {
+        clearTimeout(retryTimerRef.current);
+      }
+    };
+  }, [fetchMoviesHandler]);
+
   return (
     <main className="main-content py-5">
       <Container>
@@ -93,6 +107,9 @@ const Movies = () => {
           <h2 className="section-title">STAR WARS MOVIES</h2>
           <div className="section-title-line"></div>
         </div>
+
+        {/* Add Movie Form */}
+        <AddMovie onAddMovie={addMovieHandler} />
 
         {/* Fetch Action Panel */}
         <div className="text-center mb-5 d-flex justify-content-center align-items-center gap-3 flex-wrap">
