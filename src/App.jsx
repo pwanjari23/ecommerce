@@ -11,6 +11,7 @@ import Store from './pages/Store';
 import About from './pages/About';
 import Movies from './pages/Movies';
 import ContactUs from './pages/ContactUs';
+import ProductDetail from './pages/ProductDetail';
 
 function App() {
   const [showCart, setShowCart] = useState(false);
@@ -29,6 +30,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/store" element={<Store />} />
+        <Route path="/store/:productId" element={<ProductDetail />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/movies" element={<Movies />} />

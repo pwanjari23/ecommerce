@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 import { Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import CartContext from '../store/cart-context';
 
-const ProductCard = ({ title, price, imageUrl }) => {
+const ProductCard = ({ id, title, price, imageUrl }) => {
   const cartCtx = useContext(CartContext);
 
   const addToCartHandler = () => {
     cartCtx.addItem({
+      id: id,
       title: title,
       price: price,
       imageUrl: imageUrl,
@@ -18,13 +20,17 @@ const ProductCard = ({ title, price, imageUrl }) => {
       <Card className="premium-product-card">
         <Card.Body className="product-card-body">
           <Card.Title className="product-card-title text-center">
-            {title}
+            <Link to={`/store/${id}`} style={{ textDecoration: 'none', color: 'inherit' }} className="product-title-link">
+              {title}
+            </Link>
           </Card.Title>
           
-          <div className="product-image-container">
-            <img src={imageUrl} alt={title} className="product-image" />
-            <div className="product-image-overlay"></div>
-          </div>
+          <Link to={`/store/${id}`}>
+            <div className="product-image-container">
+              <img src={imageUrl} alt={title} className="product-image" />
+              <div className="product-image-overlay"></div>
+            </div>
+          </Link>
           
           <div className="product-card-footer">
             <div className="product-price">
