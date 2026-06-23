@@ -13,7 +13,7 @@ const Auth = () => {
   const emailRef = useRef('');
   const passwordRef = useRef('');
   const confirmPasswordRef = useRef('');
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -78,9 +78,9 @@ const Auth = () => {
       if (data && data.idToken) {
         console.log('idToken:', data.idToken);
         authCtx.login(data.idToken);
-        // Redirect to profile page after 1 second
+        // Redirect to products/store page after 1 second
         setTimeout(() => {
-          navigate('/profile');
+          navigate('/store');
         }, 1000);
       }
       
@@ -166,7 +166,8 @@ const Auth = () => {
               )}
             </div>
 
-            <div className="text-center">
+            {/* Hiding switch mode button as signup page is not needed */}
+            {/* <div className="text-center">
               <button 
                 type="button" 
                 className="btn-switch-auth" 
@@ -174,7 +175,7 @@ const Auth = () => {
               >
                 {isLogin ? 'Create new account' : 'Login with existing account'}
               </button>
-            </div>
+            </div> */}
           </form>
         </div>
       </Container>

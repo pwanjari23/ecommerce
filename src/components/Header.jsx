@@ -32,13 +32,7 @@ const Header = ({ onCartClick }) => {
             <Nav.Link as={NavLink} to="/" className="nav-link-custom" end>HOME</Nav.Link>
             <Nav.Link as={NavLink} to="/store" className="nav-link-custom">STORE</Nav.Link>
             <Nav.Link as={NavLink} to="/about" className="nav-link-custom">ABOUT</Nav.Link>
-            <Nav.Link as={NavLink} to="/contact" className="nav-link-custom">CONTACT US</Nav.Link>
-            <Nav.Link as={NavLink} to="/movies" className="nav-link-custom">MOVIES</Nav.Link>
             
-            {isLoggedIn && (
-              <Nav.Link as={NavLink} to="/profile" className="nav-link-custom">PROFILE</Nav.Link>
-            )}
-
             {!isLoggedIn ? (
               <Nav.Link as={NavLink} to="/auth" className="nav-link-custom">LOGIN</Nav.Link>
             ) : (
@@ -49,6 +43,13 @@ const Header = ({ onCartClick }) => {
               >
                 LOGOUT
               </button>
+            )}
+
+            <Nav.Link as={NavLink} to="/contact" className="nav-link-custom">CONTACT US</Nav.Link>
+            <Nav.Link as={NavLink} to="/movies" className="nav-link-custom">MOVIES</Nav.Link>
+            
+            {isLoggedIn && (
+              <Nav.Link as={NavLink} to="/profile" className="nav-link-custom">PROFILE</Nav.Link>
             )}
           </Nav>
           <Nav>
