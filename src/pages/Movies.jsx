@@ -2,7 +2,7 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Container, Row, Col, Card, Spinner, Alert } from 'react-bootstrap';
 import AddMovie from '../components/AddMovie';
 
-const FIREBASE_DB_URL = 'https://react-http-ecommerce-default-rtdb.firebaseio.com';
+const FIREBASE_DB_URL = 'https://ecommerce-movies-default-rtdb.firebaseio.com';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
