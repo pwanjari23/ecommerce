@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../store/auth-context';
 
 // Note: Paste your actual Firebase Web API Key here from Project Settings -> General tab in Firebase Console
-const FIREBASE_API_KEY = 'YOUR_FIREBASE_API_KEY';
+export const FIREBASE_API_KEY = 'YOUR_FIREBASE_API_KEY';
 
 const Auth = () => {
   const authCtx = useContext(AuthContext);
