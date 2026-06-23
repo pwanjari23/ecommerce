@@ -22,6 +22,7 @@ const Header = ({ onCartClick }) => {
             <Nav.Link as={NavLink} to="/" className="nav-link-custom" end>HOME</Nav.Link>
             <Nav.Link as={NavLink} to="/store" className="nav-link-custom">STORE</Nav.Link>
             <Nav.Link as={NavLink} to="/about" className="nav-link-custom">ABOUT</Nav.Link>
+            <Nav.Link as={NavLink} to="/contact" className="nav-link-custom">CONTACT US</Nav.Link>
             <Nav.Link as={NavLink} to="/movies" className="nav-link-custom">MOVIES</Nav.Link>
           </Nav>
           <Nav>
