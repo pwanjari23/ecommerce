@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import { Navbar, Nav, Container, Badge } from 'react-bootstrap';
 import { FiShoppingCart } from 'react-icons/fi';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import CartContext from '../store/cart-context';
 import AuthContext from '../store/auth-context';
 
 const Header = ({ onCartClick }) => {
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const isLoggedIn = authCtx.isLoggedIn;
   
@@ -16,6 +17,7 @@ const Header = ({ onCartClick }) => {
 
   const logoutHandler = () => {
     authCtx.logout();
+    navigate('/auth');
   };
 
   return (
