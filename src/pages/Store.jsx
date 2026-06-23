@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { Navigate } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
+import AuthContext from '../store/auth-context';
 
 export const productsArr = [
   {
@@ -65,6 +67,12 @@ export const productsArr = [
 ];
 
 const Store = () => {
+  const authCtx = useContext(AuthContext);
+
+  if (!authCtx.isLoggedIn) {
+    return <Navigate to="/auth" replace />;
+  }
+
   return (
     <main className="main-content py-5">
       <Container>

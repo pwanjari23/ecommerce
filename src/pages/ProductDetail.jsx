@@ -1,12 +1,18 @@
 import React, { useState, useContext } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Alert } from 'react-bootstrap';
 import { productsArr } from './Store';
 import CartContext from '../store/cart-context';
+import AuthContext from '../store/auth-context';
 
 const ProductDetail = () => {
+  const authCtx = useContext(AuthContext);
   const { productId } = useParams();
   const cartCtx = useContext(CartContext);
+
+  if (!authCtx.isLoggedIn) {
+    return <Navigate to="/auth" replace />;
+  }
   
   // Find the selected product in the array
   const product = productsArr.find((p) => p.id === productId);
