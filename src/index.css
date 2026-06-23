@@ -848,3 +848,24 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 0 20px rgba(224, 169, 109, 0.5);
   transform: translateY(-2px);
 }
+
+.delete-movie-btn {
+  background: transparent;
+  border: 1px solid rgba(230, 57, 70, 0.4);
+  color: #e63946;
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  align-self: flex-start;
+  transition: var(--transition-smooth);
+  cursor: pointer;
+}
+
+.delete-movie-btn:hover {
+  background: #e63946;
+  color: var(--text-light);
+  border-color: #e63946;
+  box-shadow: 0 0 15px rgba(230, 57, 70, 0.4);
+  transform: translateY(-2px);
+}
