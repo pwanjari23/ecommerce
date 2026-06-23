@@ -1,8 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import { Container, Card, Alert } from 'react-bootstrap';
 import { Navigate } from 'react-router-dom';
-import AuthContext from '../store/auth-context';
-import { FIREBASE_API_KEY } from './Auth';
+import AuthContext, { FIREBASE_API_KEY } from '../store/auth-context';
 
 const Profile = () => {
   const authCtx = useContext(AuthContext);

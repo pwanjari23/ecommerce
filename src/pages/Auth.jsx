@@ -1,10 +1,7 @@
 import React, { useRef, useState, useContext } from 'react';
 import { Container, Alert, Spinner } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import AuthContext from '../store/auth-context';
-
-// Note: Paste your actual Firebase Web API Key here from Project Settings -> General tab in Firebase Console
-export const FIREBASE_API_KEY = 'YOUR_FIREBASE_API_KEY';
+import AuthContext, { FIREBASE_API_KEY } from '../store/auth-context';
 
 const Auth = () => {
   const authCtx = useContext(AuthContext);

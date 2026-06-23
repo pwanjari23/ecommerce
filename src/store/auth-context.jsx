@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FIREBASE_API_KEY } from '../pages/Auth';
+
+export const FIREBASE_API_KEY = 'YOUR_FIREBASE_API_KEY';
 
 const AuthContext = React.createContext({
   token: '',
