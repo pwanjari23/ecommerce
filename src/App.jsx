@@ -12,6 +12,7 @@ import About from './pages/About';
 import Movies from './pages/Movies';
 import ContactUs from './pages/ContactUs';
 import ProductDetail from './pages/ProductDetail';
+import Auth from './pages/Auth';
 
 function App() {
   const [showCart, setShowCart] = useState(false);
@@ -34,6 +35,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/movies" element={<Movies />} />
+        <Route path="/auth" element={<Auth />} />
       </Routes>
 
       {/* Cart Offcanvas Drawer */}
