@@ -1,11 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { Container, Alert, Spinner } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import AuthContext from '../store/auth-context';
 
 // Note: Paste your actual Firebase Web API Key here from Project Settings -> General tab in Firebase Console
 const FIREBASE_API_KEY = 'YOUR_FIREBASE_API_KEY';
 
 const Auth = () => {
+  const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const emailRef = useRef('');
   const passwordRef = useRef('');
   const confirmPasswordRef = useRef('');
@@ -70,9 +74,14 @@ const Auth = () => {
 
       setSuccess(true);
       
-      // Log the JWT token
+      // Log the JWT token and store it in context
       if (data && data.idToken) {
         console.log('idToken:', data.idToken);
+        authCtx.login(data.idToken);
+        // Redirect to profile page after 1 second
+        setTimeout(() => {
+          navigate('/profile');
+        }, 1000);
       }
       
       // Clear input fields

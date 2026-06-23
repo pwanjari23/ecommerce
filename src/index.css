@@ -1175,3 +1175,41 @@ h1, h2, h3, h4, h5, h6 {
     transform: rotate(360deg);
   }
 }
+
+/* Profile and Logout Button Styling */
+.profile-card-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.btn-logout {
+  background: transparent;
+  border: none;
+  color: var(--text-muted) !important;
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  margin: 0 15px;
+  position: relative;
+  transition: var(--transition-smooth);
+  cursor: pointer;
+}
+
+.btn-logout:hover {
+  color: var(--text-light) !important;
+}
+
+.btn-logout::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: var(--transition-smooth);
+}
+
+.btn-logout:hover::after {
+  width: 100%;
+}
